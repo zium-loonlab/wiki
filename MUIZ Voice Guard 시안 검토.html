@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>MUIZ Voice Guard 시안 검토</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --type-display: 84px;
+    --type-title: 64px;
+    --type-section: 48px;
+    --type-subtitle: 36px;
+    --type-body: 28px;
+    --type-small: 22px;
+    --type-micro: 18px;
+    --pad-x: 120px;
+    --pad-top: 96px;
+    --pad-bottom: 96px;
+    --gap-title: 56px;
+    --gap-item: 28px;
+
+    --vg-mint: #2BD4C4;
+    --vg-blue: #4F7CFF;
+    --vg-violet: #8B5CF6;
+    --vg-grad: linear-gradient(90deg, #2BD4C4 0%, #4F7CFF 50%, #8B5CF6 100%);
+    --vg-grad-soft: linear-gradient(135deg, #E8FBF8 0%, #EFF3FF 50%, #F2EDFE 100%);
+
+    --ink: #0B1020;
+    --ink-soft: #3A3F52;
+    --ink-mute: #7A8094;
+    --line: rgba(11, 16, 32, 0.08);
+    --line-soft: rgba(11, 16, 32, 0.05);
+    --bg-soft: #F6F7FB;
+  }
+
+  html, body { background:#0B1020; }
+  deck-stage { background:#0B1020; }
+  deck-stage > section {
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: var(--font-base);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ===== Brand mark ===== */
+  .brand {
+    display: inline-flex; align-items: baseline; gap: 10px;
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+  .brand .b1 { font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .brand .b2 {
+    font-weight: 800; letter-spacing: -0.02em;
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* ===== Slide chrome ===== */
+  .slide-pad {
+    position: absolute; inset: 0;
+    padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+    display: flex; flex-direction: column;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: var(--type-small); font-weight: 600; color: var(--ink-mute);
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: ""; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--vg-grad);
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: var(--type-title);
+    font-weight: 800; letter-spacing: -0.025em; color: var(--ink);
+    margin-top: 18px;
+  }
+  .page-sub {
+    font-size: var(--type-body); color: var(--ink-soft);
+    margin-top: 20px; max-width: 1400px; line-height: 1.5;
+  }
+
+  /* ===== Slide footer ===== */
+  .foot {
+    position: absolute; left: var(--pad-x); right: var(--pad-x); bottom: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--ink-mute); font-size: var(--type-micro); font-weight: 500;
+  }
+  .foot .brand { font-size: 18px; }
+  .foot .meta { letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ===== Slide 1 — title cover ===== */
+  .cover {
+    background:
+      radial-gradient(900px 700px at 80% 20%, rgba(139,92,246,.18), transparent 60%),
+      radial-gradient(800px 600px at 20% 80%, rgba(43,212,196,.20), transparent 60%),
+      radial-gradient(900px 700px at 55% 55%, rgba(79,124,255,.16), transparent 65%),
+      #0B1020;
+    color: #fff;
+  }
+  .cover .slide-pad { padding-top: 120px; padding-bottom: 120px; }
+  .cover .brand .b1 { color: #fff; }
+  .cover .eyebrow { color: rgba(255,255,255,.62); }
+  .cover .eyebrow::before { background: var(--vg-grad); }
+  .cover .hero-title {
+    font-family: var(--font-display);
+    font-size: var(--type-display);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+    margin-top: 56px; max-width: 1500px;
+  }
+  .cover .hero-title .accent {
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .cover .hero-sub {
+    font-size: var(--type-subtitle); color: rgba(255,255,255,.72);
+    font-weight: 500; max-width: 1300px; margin-top: 40px; line-height: 1.45;
+  }
+  .cover .meta-row {
+    display: flex; gap: 56px; margin-top: 80px; color: rgba(255,255,255,.72);
+    font-size: var(--type-small);
+  }
+  .cover .meta-row b { color: #fff; font-weight: 700; display: block; font-size: 20px; margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cover .foot { color: rgba(255,255,255,.5); }
+  .cover .foot .brand .b1 { color: rgba(255,255,255,.85); }
+
+  /* deco ring */
+  .ring {
+    position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
+    width: 1100px; height: 1100px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.06);
+    pointer-events: none;
+  }
+  .ring::before, .ring::after {
+    content:""; position:absolute; inset: 60px; border-radius:50%;
+    border: 1px solid rgba(255,255,255,.05);
+  }
+  .ring::after { inset: 140px; }
+
+  /* ===== Slide 2 — common features ===== */
+  .feat-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    margin-top: 64px;
+  }
+  .feat {
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 36px 36px 40px;
+    background: #fff;
+    display: flex; flex-direction: column; gap: 16px;
+    min-height: 200px;
+    position: relative;
+  }
+  .feat .num {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 700; color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .feat .label {
+    font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink);
+  }
+  .feat .desc {
+    font-size: 20px; color: var(--ink-soft); line-height: 1.5;
+  }
+  .feat .bar {
+    position: absolute; left: 0; top: 0; height: 4px; width: 56px;
+    background: var(--vg-grad); border-radius: 0 0 4px 0;
+  }
+  .callout {
+    margin-top: 48px;
+    padding: 28px 36px;
+    background: var(--vg-grad-soft);
+    border-radius: 20px;
+    display: flex; align-items: center; gap: 24px;
+    font-size: 24px; color: var(--ink); font-weight: 500;
+  }
+  .callout b { font-weight: 700; }
+  .callout-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--vg-grad); flex: 0 0 12px;
+  }
+
+  /* ===== Option slides (3,4,5) ===== */
+  .opt-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 48px;
+  }
+  .opt-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px; border-radius: 999px;
+    font-size: 18px; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--ink); border: 1px solid var(--line);
+    background: #fff;
+  }
+  .opt-tag .dot { width: 10px; height: 10px; border-radius:50%; background: var(--vg-grad); }
+  .opt-num {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 800; color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .opt-name {
+    font-family: var(--font-display);
+    font-size: var(--type-title); font-weight: 800; letter-spacing: -0.025em;
+    color: var(--ink); margin-top: 8px;
+  }
+  .opt-name .accent {
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .opt-concept {
+    font-size: var(--type-body); color: var(--ink-soft);
+    margin-top: 18px; max-width: 1100px; line-height: 1.5;
+  }
+  .opt-body {
+    display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px;
+    margin-top: 48px; flex: 1; min-height: 0;
+  }
+  .shots {
+    display: grid; grid-template-columns: 1fr; gap: 18px;
+  }
+  .shot {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 28px -16px rgba(11,16,32,.18);
+    background: var(--bg-soft);
+    position: relative;
+  }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot .cap {
+    position: absolute; top: 10px; left: 10px;
+    padding: 4px 10px; border-radius: 6px;
+    background: rgba(11,16,32,.78); color: #fff;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+  }
+  .shots-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .opt-side {
+    display: flex; flex-direction: column; gap: 36px;
+  }
+  .side-h {
+    font-size: 20px; font-weight: 700; color: var(--ink-mute);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding-bottom: 12px; border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .bullets { display: flex; flex-direction: column; gap: 16px; }
+  .bullets li {
+    list-style: none; padding-left: 28px; position: relative;
+    font-size: 22px; color: var(--ink-soft); line-height: 1.5;
+  }
+  .bullets li::before {
+    content: ""; position: absolute; left: 0; top: 13px;
+    width: 12px; height: 2px; background: var(--vg-grad); border-radius: 2px;
+  }
+  .fit-card {
+    padding: 24px 28px; border-radius: 16px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line-soft);
+  }
+  .fit-card .lbl {
+    font-size: 16px; font-weight: 700; color: var(--ink-mute);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .fit-card .txt {
+    font-size: 22px; color: var(--ink); font-weight: 500; line-height: 1.5;
+  }
+
+  /* ===== Slide 6 — comparison table ===== */
+  .cmp-wrap {
+    margin-top: 56px; flex: 1; min-height: 0;
+    display: flex; align-items: center;
+  }
+  .cmp {
+    width: 100%;
+    border-collapse: separate; border-spacing: 0;
+    border: 1px solid var(--line);
+    border-radius: 20px; overflow: hidden;
+    background: #fff;
+  }
+  .cmp th, .cmp td {
+    padding: 22px 28px; text-align: left; vertical-align: middle;
+    border-bottom: 1px solid var(--line);
+    font-size: 22px; color: var(--ink-soft);
+  }
+  .cmp tr:last-child th, .cmp tr:last-child td { border-bottom: none; }
+  .cmp thead th {
+    background: #0B1020; color: #fff;
+    font-size: 22px; font-weight: 700; letter-spacing: -0.01em;
+    padding: 26px 28px;
+  }
+  .cmp thead th:first-child {
+    background: linear-gradient(180deg, #0B1020 0%, #1a2040 100%);
+  }
+  .cmp tbody th {
+    width: 200px;
+    font-weight: 700; color: var(--ink); font-size: 22px;
+    background: var(--bg-soft);
+  }
+  .cmp .opt-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .cmp .opt-pill .n {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--vg-grad); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800;
+  }
+  .cmp .strong-cell { color: var(--ink); font-weight: 600; }
+
+  /* ===== Slide 7 — review points ===== */
+  .qlist { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 56px; margin-top: 64px; }
+  .qitem {
+    display: flex; gap: 24px; padding: 28px 0;
+    border-top: 1px solid var(--line);
+  }
+  .qitem .qno {
+    font-family: var(--font-display);
+    font-size: 32px; font-weight: 800;
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    flex: 0 0 60px; letter-spacing: -0.02em;
+  }
+  .qitem .qtxt {
+    font-size: 26px; color: var(--ink); font-weight: 500; line-height: 1.45;
+  }
+
+  /* ===== Slide 8 — recommendation ===== */
+  .rec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+  .rec {
+    border: 1px solid var(--line); border-radius: 22px;
+    padding: 40px 36px; background: #fff;
+    display: flex; flex-direction: column; min-height: 460px;
+    position: relative; overflow: hidden;
+  }
+  .rec.primary {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F6F8FF 100%);
+    border-color: rgba(79,124,255,.35);
+    box-shadow: 0 20px 40px -24px rgba(79,124,255,.35);
+  }
+  .rec .rank {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.08em;
+    color: var(--ink-mute);
+  }
+  .rec.primary .rank {
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .rec .opt-num-big {
+    font-family: var(--font-display);
+    font-size: 88px; font-weight: 800; letter-spacing: -0.04em; color: var(--ink);
+    margin-top: 4px; line-height: 1;
+  }
+  .rec.primary .opt-num-big {
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .rec .opt-h {
+    font-size: 26px; font-weight: 700; color: var(--ink);
+    margin-top: 14px; letter-spacing: -0.015em;
+  }
+  .rec .opt-d {
+    font-size: 20px; color: var(--ink-soft); margin-top: 16px;
+    line-height: 1.55; flex: 1;
+  }
+  .rec .pin {
+    align-self: flex-start;
+    margin-top: 28px;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--ink-mute); background: var(--bg-soft);
+  }
+  .rec.primary .pin {
+    color: #fff; background: var(--vg-grad);
+  }
+
+  .key-note {
+    margin-top: 48px; padding: 36px 40px;
+    background: var(--vg-grad-soft);
+    border-radius: 22px;
+    display: flex; gap: 28px; align-items: flex-start;
+  }
+  .key-note .kn-l {
+    font-size: 16px; font-weight: 800; letter-spacing: 0.08em;
+    color: var(--ink-mute); text-transform: uppercase;
+    padding-top: 6px; min-width: 200px;
+  }
+  .key-note .kn-r {
+    font-size: 24px; color: var(--ink); font-weight: 600; line-height: 1.5; flex: 1;
+  }
+  .key-note .kn-r b {
+    background: var(--vg-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-weight: 800;
+  }
+
+  /* ===== Section header (slide 2) ===== */
+  .sec-num {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.12em;
+    color: var(--ink-mute);
+  }
+</style>
+
+<script type="application/json" id="speaker-notes">
+[
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  ""
+]
+</script>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ============================ SLIDE 1 — Cover / 목적 ============================ -->
+<section data-label="01 목적" class="cover">
+  <div class="ring"></div>
+  <div class="slide-pad">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+
+    <div style="margin-top:88px;" class="eyebrow">내부 검토 · 고객용 Viewer 디자인</div>
+
+    <h1 class="hero-title">
+      고객용 Viewer,<br>
+      <span class="accent">어떤 방향으로</span> 보여줄까.
+    </h1>
+
+    <p class="hero-sub">
+      운영자가 사용하는 Admin Console과 달리,<br>
+      고객이 보호 현황 · 탐지 내역 · 증거 리포트를 확인하는 Viewer 화면.<br>
+      동일한 기능 구성을 기준으로 3가지 표현 방향을 비교합니다.
+    </p>
+
+    <div class="meta-row">
+      <div><b>FOR</b>내부 디자인 검토 회의</div>
+      <div><b>SCOPE</b>고객용 Viewer · 3개 시안</div>
+      <div><b>DATE</b>2026 · 05</div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1" style="color:rgba(255,255,255,.85);">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">01 / 08 · Purpose</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 2 — 공통 기능 구성 ============================ -->
+<section data-label="02 공통 기능 구성">
+  <div class="slide-pad">
+    <div class="eyebrow">02 · 공통 기능 구성</div>
+    <h2 class="page-title">세 시안 모두 같은 기능을 제공합니다.</h2>
+    <p class="page-sub">
+      차이는 <b style="color:var(--ink);font-weight:700;">기능이 아니라 화면 인상과 사용 경험</b>입니다.
+      어떤 톤 · 어떤 구조로 보여줄지가 이번 검토의 핵심입니다.
+    </p>
+
+    <div class="feat-grid">
+      <div class="feat"><span class="bar"></span>
+        <div class="num">01</div>
+        <div class="label">로그인</div>
+        <div class="desc">고객 계정으로 안전하게 접근</div>
+      </div>
+      <div class="feat"><span class="bar"></span>
+        <div class="num">02</div>
+        <div class="label">보호 현황 Overview</div>
+        <div class="desc">보이스 보호 상태를 한눈에 확인</div>
+      </div>
+      <div class="feat"><span class="bar"></span>
+        <div class="num">03</div>
+        <div class="label">최근 탐지 내역</div>
+        <div class="desc">유사 보이스 의심 콘텐츠 목록</div>
+      </div>
+      <div class="feat"><span class="bar"></span>
+        <div class="num">04</div>
+        <div class="label">증거 및 리포트</div>
+        <div class="desc">탐지 증거와 분석 리포트 다운로드</div>
+      </div>
+      <div class="feat"><span class="bar"></span>
+        <div class="num">05</div>
+        <div class="label">보호 진행 상태</div>
+        <div class="desc">모니터링 · 분석 · 보호 단계별 진행</div>
+      </div>
+      <div class="feat"><span class="bar"></span>
+        <div class="num">06</div>
+        <div class="label">추가 확인 요청</div>
+        <div class="desc">전문 팀에 상세 분석 요청</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-dot"></span>
+      <span>기능은 동일하다. 무엇이 달라지는가는 <b>구조 · 톤 · 인상</b>이다.</span>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">02 / 08 · Common Features</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 3 — 1안 ============================ -->
+<section data-label="03 1안">
+  <div class="slide-pad">
+    <div class="opt-head">
+      <div>
+        <div class="opt-num">OPTION 01</div>
+        <h2 class="opt-name">좌측 네비 + <span class="accent">그라데이션 + AI 느낌</span></h2>
+        <p class="opt-concept">
+          좌측 네비게이션 구조는 유지하되, 관리자 느낌을 줄이고 AI 서비스다운 시각 요소를 강화한 안.
+        </p>
+      </div>
+      <div class="opt-tag"><span class="dot"></span>AI 강조형 대시보드</div>
+    </div>
+
+    <div class="opt-body">
+      <div class="shots">
+        <div class="shot"><span class="cap">OVERVIEW</span><img src="uploads/1-overview.png" alt="1안 Overview"></div>
+        <div class="shots-row">
+          <div class="shot"><span class="cap">LOGIN</span><img src="uploads/1-login.png" alt="1안 로그인"></div>
+          <div class="shot"><span class="cap">EVIDENCE</span><img src="uploads/1-detection.png" alt="1안 증거/리포트"></div>
+        </div>
+      </div>
+
+      <div class="opt-side">
+        <div>
+          <div class="side-h">특징</div>
+          <ul class="bullets">
+            <li>좌측 네비 기반으로 메뉴 이동이 명확함</li>
+            <li>화이트 기반 UI로 가독성 확보</li>
+            <li>CTA · 활성 메뉴 · 쉴드 그래픽에 그라데이션 적용</li>
+            <li>AI 기반 보호 서비스 인상을 가장 적극적으로 표현</li>
+            <li>대시보드 구조와 Viewer 감성의 중간형</li>
+          </ul>
+        </div>
+        <div class="fit-card">
+          <div class="lbl">적합한 경우</div>
+          <div class="txt">기존 구조는 유지하면서, 고객에게 더 세련되고 AI다운 느낌을 주고 싶을 때.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">03 / 08 · Option 01</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 4 — 2안 ============================ -->
+<section data-label="04 2안">
+  <div class="slide-pad">
+    <div class="opt-head">
+      <div>
+        <div class="opt-num">OPTION 02</div>
+        <h2 class="opt-name">좌측 네비 + <span class="accent">기존 브랜드 컬러</span></h2>
+        <p class="opt-concept">
+          기존 MUIZ Voice Guard 브랜드 컬러와 좌측 네비 구조를 유지한 안정형 대시보드. 변화 폭이 가장 작고, 기존 화면과의 연결성이 높다.
+        </p>
+      </div>
+      <div class="opt-tag"><span class="dot"></span>기존 브랜드 유지형</div>
+    </div>
+
+    <div class="opt-body">
+      <div class="shots">
+        <div class="shot"><span class="cap">OVERVIEW</span><img src="uploads/2-overview.png" alt="2안 Overview"></div>
+        <div class="shots-row">
+          <div class="shot"><span class="cap">LOGIN</span><img src="uploads/2-login.png" alt="2안 로그인"></div>
+          <div class="shot"><span class="cap">EVIDENCE</span><img src="uploads/2-detection.png" alt="2안 증거/리포트"></div>
+        </div>
+      </div>
+
+      <div class="opt-side">
+        <div>
+          <div class="side-h">특징</div>
+          <ul class="bullets">
+            <li>기존 브랜드 컬러 유지</li>
+            <li>좌측 네비 기반의 익숙한 SaaS 대시보드 구조</li>
+            <li>기능 구분이 명확하고 안정적임</li>
+            <li>관리자 / 고객 화면 간 제품 일관성 유지에 유리</li>
+            <li>AI 느낌은 약하지만 신뢰감과 정돈감이 있음</li>
+          </ul>
+        </div>
+        <div class="fit-card">
+          <div class="lbl">적합한 경우</div>
+          <div class="txt">기존 Muiz Guard의 브랜드 연속성과 안정적인 B2B 대시보드 느낌을 우선할 때.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">04 / 08 · Option 02</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 5 — 3안 ============================ -->
+<section data-label="05 3안">
+  <div class="slide-pad">
+    <div class="opt-head">
+      <div>
+        <div class="opt-num">OPTION 03</div>
+        <h2 class="opt-name">그라데이션 + <span class="accent">헤더 메뉴 (포털형)</span></h2>
+        <p class="opt-concept">
+          좌측 네비를 제거하고 상단 헤더 메뉴 중심으로 구성한 안. 관리자 페이지 느낌을 가장 많이 줄이고, 고객용 플랫폼 / 리포트 포털처럼 보이게 만든 방향.
+        </p>
+      </div>
+      <div class="opt-tag"><span class="dot"></span>고객 포털형 플랫폼</div>
+    </div>
+
+    <div class="opt-body">
+      <div class="shots">
+        <div class="shot"><span class="cap">OVERVIEW</span><img src="uploads/3-overview.png" alt="3안 Overview"></div>
+        <div class="shots-row">
+          <div class="shot"><span class="cap">LOGIN</span><img src="uploads/3-login.png" alt="3안 로그인"></div>
+          <div class="shot"><span class="cap">EVIDENCE</span><img src="uploads/3-detection.png" alt="3안 증거/리포트"></div>
+        </div>
+      </div>
+
+      <div class="opt-side">
+        <div>
+          <div class="side-h">특징</div>
+          <ul class="bullets">
+            <li>좌측 네비 없이 상단 메뉴 중심</li>
+            <li>화면이 가장 넓고 가벼워 보임</li>
+            <li>고객용 서비스 / 포털 느낌이 강함</li>
+            <li>AI 그라데이션 포인트로 기술감 표현</li>
+            <li>탐지 확인 · 리포트 · 추가 요청 흐름에 적합</li>
+          </ul>
+        </div>
+        <div class="fit-card">
+          <div class="lbl">적합한 경우</div>
+          <div class="txt">Viewer를 내부 관리툴이 아닌 외부 고객용 플랫폼처럼 보이게 하고 싶을 때.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">05 / 08 · Option 03</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 6 — 비교 표 ============================ -->
+<section data-label="06 비교">
+  <div class="slide-pad">
+    <div class="eyebrow">06 · 3가지 방향 비교</div>
+    <h2 class="page-title">한 장으로 보는 차이.</h2>
+
+    <div class="cmp-wrap">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th><span class="opt-pill"><span class="n">1</span>AI 강조형</span></th>
+            <th><span class="opt-pill"><span class="n">2</span>브랜드 유지형</span></th>
+            <th><span class="opt-pill"><span class="n">3</span>포털형</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>구조</th>
+            <td class="strong-cell">좌측 네비</td>
+            <td class="strong-cell">좌측 네비</td>
+            <td class="strong-cell">상단 헤더 메뉴</td>
+          </tr>
+          <tr>
+            <th>톤</th>
+            <td>AI 강조형</td>
+            <td>기존 브랜드 유지형</td>
+            <td>플랫폼 · 포털형</td>
+          </tr>
+          <tr>
+            <th>인상</th>
+            <td>세련된 AI 대시보드</td>
+            <td>안정적인 B2B 대시보드</td>
+            <td>고객 친화적 서비스 포털</td>
+          </tr>
+          <tr>
+            <th>장점</th>
+            <td>기술감 강함</td>
+            <td>일관성 높음</td>
+            <td>관리자 느낌 최소화</td>
+          </tr>
+          <tr>
+            <th>단점</th>
+            <td>다소 대시보드 느낌 남음</td>
+            <td>새로움이 약함</td>
+            <td>기존 구조와 차이가 큼</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">06 / 08 · Comparison</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 7 — 검토 포인트 ============================ -->
+<section data-label="07 검토 포인트">
+  <div class="slide-pad">
+    <div class="eyebrow">07 · 회의 검토 포인트</div>
+    <h2 class="page-title">선택은 이 다섯 가지 기준으로.</h2>
+    <p class="page-sub">기능이 아니라 <b style="color:var(--ink);font-weight:700;">고객 경험의 방향</b>에 대한 결정입니다.</p>
+
+    <div class="qlist">
+      <div class="qitem">
+        <div class="qno">Q1</div>
+        <div class="qtxt">고객이 자주 기능을 오가며 확인해야 하는가?</div>
+      </div>
+      <div class="qitem">
+        <div class="qno">Q2</div>
+        <div class="qtxt">기존 관리자 화면과의 일관성이 중요한가?</div>
+      </div>
+      <div class="qitem">
+        <div class="qno">Q3</div>
+        <div class="qtxt">외부 고객에게 관리자 페이지 느낌을 줄이고 싶은가?</div>
+      </div>
+      <div class="qitem">
+        <div class="qno">Q4</div>
+        <div class="qtxt">AI 서비스다운 인상을 얼마나 강하게 줄 것인가?</div>
+      </div>
+      <div class="qitem" style="grid-column: span 2;">
+        <div class="qno">Q5</div>
+        <div class="qtxt">브랜드 컬러를 유지할 것인가, 새롭게 확장할 것인가?</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">07 / 08 · Review Points</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 8 — 제안 ============================ -->
+<section data-label="08 제안 방향">
+  <div class="slide-pad">
+    <div class="eyebrow">08 · 제안 방향</div>
+    <h2 class="page-title">추천 우선순위.</h2>
+
+    <div class="rec-grid">
+      <div class="rec primary">
+        <div class="rank">1ST · 최우선 추천</div>
+        <div class="opt-num-big">3</div>
+        <div class="opt-h">고객 포털형 플랫폼</div>
+        <div class="opt-d">고객용 Viewer를 별도 포털처럼 가져갈 경우 가장 적합. 관리자 페이지 느낌을 가장 많이 줄이고 외부 고객 경험에 최적화.</div>
+        <div class="pin">포털 분리 전략</div>
+      </div>
+      <div class="rec">
+        <div class="rank">2ND</div>
+        <div class="opt-num-big">1</div>
+        <div class="opt-h">AI 강조형 대시보드</div>
+        <div class="opt-d">기존 대시보드 구조를 유지하면서 AI 느낌을 강화할 경우 적합. 변화는 톤과 시각 표현에 집중.</div>
+        <div class="pin">구조 유지 + 톤 변화</div>
+      </div>
+      <div class="rec">
+        <div class="rank">3RD</div>
+        <div class="opt-num-big">2</div>
+        <div class="opt-h">기존 브랜드 유지형</div>
+        <div class="opt-d">기존 브랜드와 화면 구조의 안정성을 우선할 경우 적합. 관리자 / 고객 일관성이 가장 높음.</div>
+        <div class="pin">안정성 우선</div>
+      </div>
+    </div>
+
+    <div class="key-note">
+      <div class="kn-l">핵심 의사결정</div>
+      <div class="kn-r">
+        고객용 Viewer를 <b>Admin Console과 분리된 경험</b>으로 가져갈지,<br>
+        기존 Muiz Guard 대시보드의 <b>연장선</b>으로 가져갈지가 이번 결정의 핵심입니다.
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="b1">MUIZ</span><span class="b2">Voice Guard</span></div>
+    <div class="meta">08 / 08 · Recommendation</div>
+  </div>
+</section>
+
+</deck-stage>
+
+</body>
+</html>

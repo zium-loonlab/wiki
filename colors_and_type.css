@@ -1,0 +1,232 @@
+/* =====================================================================
+   Wanted Design System — Foundation tokens
+   Source: Wanted Design System (Community) Figma file (CC BY 4.0)
+   ===================================================================== */
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+
+:root {
+  /* ────── ATOMIC — Common ────── */
+  --color-common-0: #FFFFFF;  --color-common-100: #000000;
+
+  /* ────── ATOMIC — Cool Neutral (default UI greys) ────── */
+  --color-cool-neutral-99:#F7F7F8; --color-cool-neutral-98:#F4F4F5;
+  --color-cool-neutral-96:#EAEBEC; --color-cool-neutral-94:#E1E2E4;
+  --color-cool-neutral-92:#DBDCDF; --color-cool-neutral-87:#C2C4C8;
+  --color-cool-neutral-80:#AEB0B6; --color-cool-neutral-70:#989BA2;
+  --color-cool-neutral-60:#878A93; --color-cool-neutral-50:#70737C;
+  --color-cool-neutral-40:#5A5C63; --color-cool-neutral-30:#46474C;
+  --color-cool-neutral-25:#37383C; --color-cool-neutral-22:#333438;
+  --color-cool-neutral-20:#2E2F33; --color-cool-neutral-18:#292A2D;
+  --color-cool-neutral-15:#212225; --color-cool-neutral-13:#1B1C1E;
+  --color-cool-neutral-10:#171719; --color-cool-neutral-8:#141415;
+  --color-cool-neutral-5:#0F0F10;
+
+  /* ────── ATOMIC — Neutral (warm) ────── */
+  --color-neutral-99:#F7F7F7; --color-neutral-96:#DCDCDC;
+  --color-neutral-92:#C4C4C4; --color-neutral-87:#B0B0B0;
+  --color-neutral-80:#9B9B9B; --color-neutral-70:#8A8A8A;
+  --color-neutral-60:#737373; --color-neutral-50:#5C5C5C;
+  --color-neutral-40:#474747; --color-neutral-30:#303030;
+  --color-neutral-20:#1C1C1C; --color-neutral-15:#171717;
+
+  /* ────── ATOMIC — Blue (PRIMARY brand) ────── */
+  --color-blue-99:#F7FBFF; --color-blue-96:#EAF2FE; --color-blue-90:#C9DEFE;
+  --color-blue-80:#9EC5FF; --color-blue-70:#69A5FF; --color-blue-60:#4F95FF;
+  --color-blue-55:#3385FF; --color-blue-50:#1A75FF;
+  --color-blue-45:#0066FF; /* PRIMARY */
+  --color-blue-40:#005EEB; --color-blue-35:#0054D1; --color-blue-25:#003E9C;
+  --color-blue-15:#002966; --color-blue-5:#001536;
+
+  /* ────── ATOMIC — Red (negative) ────── */
+  --color-red-99:#FFFAFA; --color-red-96:#FEECEC; --color-red-90:#FED5D5;
+  --color-red-80:#FFB5B5; --color-red-70:#FF8C8C; --color-red-60:#FF6363;
+  --color-red-50:#FF4242; --color-red-40:#E52222; --color-red-30:#B20C0C;
+  --color-red-15:#750404;
+
+  /* ────── ATOMIC — Green (positive) ────── */
+  --color-green-99:#F2FFF6; --color-green-96:#D9FFE6; --color-green-90:#ACFCC7;
+  --color-green-80:#7DF5A5; --color-green-65:#49E57D; --color-green-55:#1ED45A;
+  --color-green-50:#00BF40; --color-green-40:#009632; --color-green-30:#006E25;
+  --color-green-15:#004517;
+
+  /* ────── ATOMIC — Yellow (caution) ────── */
+  --color-yellow-99:#FFFCF7; --color-yellow-96:#FEF4E6; --color-yellow-90:#FEE6C6;
+  --color-yellow-80:#FFD49C; --color-yellow-70:#FFC06E; --color-yellow-60:#FFA938;
+  --color-yellow-50:#FF9200; --color-yellow-40:#D47800; --color-yellow-30:#9C5800;
+
+  /* ────── ATOMIC — Red Orange ────── */
+  --color-red-orange-96:#FEEEE5; --color-red-orange-90:#FEDBC6;
+  --color-red-orange-80:#FFC09C; --color-red-orange-65:#FF9C63;
+  --color-red-orange-55:#FF7B2E; --color-red-orange-48:#FF5E00;
+  --color-red-orange-40:#F55A00;
+
+  /* ────── ATOMIC — Lime, Cyan, Light Blue ────── */
+  --color-lime-90:#CCFCA9;  --color-lime-65:#88F03E;  --color-lime-50:#58CF04;
+  --color-lime-37:#429E00;
+  --color-cyan-96:#DEFAFF;  --color-cyan-80:#8AEDFF;  --color-cyan-50:#00BDDE;
+  --color-cyan-40:#0098B2;
+  --color-light-blue-96:#E5F6FE; --color-light-blue-80:#A1E1FF;
+  --color-light-blue-50:#00AEFF; --color-light-blue-40:#008DCF;
+
+  /* ────── ATOMIC — Violet, Purple, Pink ────── */
+  --color-violet-96:#F0ECFE; --color-violet-90:#DBD3FE; --color-violet-80:#C0B0FF;
+  --color-violet-60:#7D5EF7; --color-violet-50:#6541F2; --color-violet-45:#5B37ED;
+  --color-violet-40:#4F29E5;
+  --color-purple-96:#F9EDFF; --color-purple-80:#E9BAFF; --color-purple-50:#CB59FF;
+  --color-purple-40:#AD36E3;
+  --color-pink-96:#FEECFB;   --color-pink-80:#FFB8F3;   --color-pink-50:#F553DA;
+  --color-pink-40:#D331B8;
+
+  /* ────── Opacity scale ────── */
+  --opacity-5:.05;   --opacity-8:.08;   --opacity-12:.12;  --opacity-16:.16;
+  --opacity-22:.22;  --opacity-28:.28;  --opacity-35:.35;  --opacity-43:.43;
+  --opacity-52:.52;  --opacity-61:.61;  --opacity-74:.74;  --opacity-88:.88;
+  --opacity-97:.97;
+
+  /* =====================================================================
+     SEMANTIC TOKENS — Light theme
+     ===================================================================== */
+  /* Foreground */
+  --color-fg-strong:#000000;
+  --color-fg-normal:rgba(46,47,51,.88);
+  --color-fg-alt:rgba(55,56,60,.61);
+  --color-fg-assist:rgba(55,56,60,.28);
+  --color-fg-disabled:rgba(55,56,60,.16);
+  --color-fg-inverse:#FFFFFF;
+  --color-fg-brand:var(--color-blue-45);
+  --color-fg-brand-strong:var(--color-blue-40);
+  --color-fg-positive:var(--color-green-50);
+  --color-fg-negative:var(--color-red-50);
+  --color-fg-cautionary:var(--color-yellow-50);
+  --color-fg-informative:var(--color-blue-45);
+  --color-fg-accent:var(--color-red-orange-48);
+
+  /* Background */
+  --color-bg-base:#FFFFFF;
+  --color-bg-elevated:#FFFFFF;
+  --color-bg-alt:var(--color-cool-neutral-99);
+  --color-bg-sunken:var(--color-cool-neutral-98);
+  --color-bg-overlay:rgba(0,0,0,.28);
+  --color-bg-neutral:var(--color-cool-neutral-96);
+  --color-bg-neutral-hover:var(--color-cool-neutral-94);
+  --color-bg-neutral-press:var(--color-cool-neutral-92);
+  --color-bg-brand:var(--color-blue-45);
+  --color-bg-brand-hover:var(--color-blue-40);
+  --color-bg-brand-press:var(--color-blue-35);
+  --color-bg-brand-subtle:var(--color-blue-96);
+  --color-bg-positive:var(--color-green-50);
+  --color-bg-positive-subtle:var(--color-green-96);
+  --color-bg-negative:var(--color-red-50);
+  --color-bg-negative-subtle:var(--color-red-96);
+  --color-bg-cautionary:var(--color-yellow-50);
+  --color-bg-cautionary-subtle:var(--color-yellow-96);
+
+  /* Lines */
+  --color-line-strong:rgba(112,115,124,.43);
+  --color-line-normal:rgba(112,115,124,.22);
+  --color-line-alt:rgba(112,115,124,.08);
+
+  /* Interaction */
+  --color-interaction-inactive:rgba(55,56,60,.16);
+  --color-interaction-disabled:rgba(55,56,60,.08);
+
+  /* Static */
+  --color-static-black:#000000;
+  --color-static-white:#FFFFFF;
+
+  /* ────── ELEVATION ────── */
+  --shadow-emphasize:0 4px 6px -1px rgba(23,23,23,.06),0 2px 4px -2px rgba(23,23,23,.06);
+  --shadow-strong:0 10px 15px -3px rgba(23,23,23,.07),0 4px 6px -2px rgba(0,0,0,.07);
+  --shadow-heavy:0 16px 24px -6px rgba(23,23,23,.08),0 6px 10px -4px rgba(23,23,23,.08);
+  --shadow-xheavy:0 24px 38px -10px rgba(23,23,23,.12),0 10px 15px -5px rgba(23,23,23,.10);
+
+  /* ────── RADIUS ────── */
+  --radius-2xs:4px;  --radius-xs:8px;   --radius-sm:12px;
+  --radius-md:16px;  --radius-lg:22px;  --radius-xl:32px;
+  --radius-2xl:64px; --radius-pill:9999px;
+
+  /* ────── SPACING (4 px base) ────── */
+  --space-2:2px;   --space-4:4px;    --space-6:6px;    --space-8:8px;
+  --space-10:10px; --space-12:12px;  --space-16:16px;  --space-20:20px;
+  --space-24:24px; --space-32:32px;  --space-40:40px;  --space-48:48px;
+  --space-56:56px; --space-64:64px;  --space-96:96px;  --space-128:128px;
+
+  /* ────── TYPE FAMILIES ────── */
+  --font-base:'Pretendard JP','Pretendard Variable','Pretendard',
+              -apple-system,'Apple SD Gothic Neo','Noto Sans KR',
+              system-ui,sans-serif;
+  --font-display:'Wanted Sans Variable','Wanted Sans','Pretendard JP',
+                 system-ui,sans-serif;
+  --font-mono:'SF Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+
+/* ────── Dark theme ────── */
+[data-theme="dark"] {
+  --color-fg-strong:#FFFFFF;
+  --color-fg-normal:rgba(247,247,248,.92);
+  --color-fg-alt:rgba(247,247,248,.61);
+  --color-fg-assist:rgba(247,247,248,.28);
+  --color-fg-disabled:rgba(247,247,248,.16);
+  --color-fg-inverse:#000000;
+  --color-bg-base:var(--color-cool-neutral-8);
+  --color-bg-elevated:var(--color-cool-neutral-13);
+  --color-bg-alt:var(--color-cool-neutral-10);
+  --color-bg-sunken:var(--color-cool-neutral-5);
+  --color-bg-neutral:var(--color-cool-neutral-18);
+  --color-bg-neutral-hover:var(--color-cool-neutral-22);
+  --color-bg-neutral-press:var(--color-cool-neutral-25);
+  --color-bg-brand:var(--color-blue-50);
+  --color-bg-brand-hover:var(--color-blue-55);
+  --color-bg-brand-subtle:rgba(0,102,255,.16);
+  --color-line-strong:rgba(247,247,248,.35);
+  --color-line-normal:rgba(247,247,248,.16);
+  --color-line-alt:rgba(247,247,248,.08);
+  --color-fg-brand:var(--color-blue-55);
+}
+
+/* =====================================================================
+   TYPE SCALE — Pretendard JP, exact values from the Figma library.
+   Each `.typo-*` class sets size + line-height + tracking together.
+   For `Body 1/2` and `Label 1`, "Reading" variants increase line-height
+   for paragraph copy; the default is "Normal" for UI labels.
+   ===================================================================== */
+.typo-display-1   { font:700 56px/1.286 var(--font-base); letter-spacing:-0.034em; }
+.typo-display-2   { font:700 40px/1.30  var(--font-base); letter-spacing:-0.0282em; }
+.typo-display-3   { font:700 36px/1.334 var(--font-base); letter-spacing:-0.027em;  }
+.typo-title-1     { font:700 32px/1.375 var(--font-base); letter-spacing:-0.0253em; }
+.typo-title-2     { font:700 28px/1.358 var(--font-base); letter-spacing:-0.0236em; }
+.typo-title-3     { font:700 24px/1.334 var(--font-base); letter-spacing:-0.023em;  }
+.typo-heading-1   { font:600 22px/1.364 var(--font-base); letter-spacing:-0.0194em; }
+.typo-heading-2   { font:600 20px/1.40  var(--font-base); letter-spacing:-0.012em;  }
+.typo-headline-1  { font:600 18px/1.445 var(--font-base); letter-spacing:-0.002em;  }
+.typo-headline-2  { font:600 17px/1.412 var(--font-base); letter-spacing:0;         }
+.typo-body-1      { font:500 16px/1.5   var(--font-base); letter-spacing:0.0057em;  }
+.typo-body-1-reading{font:500 16px/1.625 var(--font-base);letter-spacing:0.0057em;  }
+.typo-body-2      { font:500 15px/1.467 var(--font-base); letter-spacing:0.0096em;  }
+.typo-body-2-reading{font:500 15px/1.60 var(--font-base);letter-spacing:0.0096em;  }
+.typo-label-1     { font:600 14px/1.429 var(--font-base); letter-spacing:0.0145em;  }
+.typo-label-1-reading{font:500 14px/1.571 var(--font-base);letter-spacing:0.0145em; }
+.typo-label-2     { font:600 13px/1.385 var(--font-base); letter-spacing:0.0194em;  }
+.typo-caption-1   { font:500 12px/1.334 var(--font-base); letter-spacing:0.0252em;  }
+.typo-caption-2   { font:500 11px/1.273 var(--font-base); letter-spacing:0.0311em;  }
+
+/* Element defaults — these are sane starting points; pages can override */
+html, body { font-family: var(--font-base); color: var(--color-fg-normal);
+             background: var(--color-bg-base); margin: 0;
+             -webkit-font-smoothing: antialiased; }
+h1 { font: 700 36px/1.334 var(--font-base); letter-spacing:-0.027em; color:var(--color-fg-strong); margin:0; }
+h2 { font: 700 28px/1.358 var(--font-base); letter-spacing:-0.0236em; color:var(--color-fg-strong); margin:0; }
+h3 { font: 700 24px/1.334 var(--font-base); letter-spacing:-0.023em;  color:var(--color-fg-strong); margin:0; }
+h4 { font: 600 20px/1.40  var(--font-base); letter-spacing:-0.012em;  color:var(--color-fg-strong); margin:0; }
+h5 { font: 600 17px/1.412 var(--font-base); color:var(--color-fg-strong); margin:0; }
+h6 { font: 600 14px/1.429 var(--font-base); letter-spacing:0.0145em;  color:var(--color-fg-alt); margin:0; text-transform:uppercase; }
+p  { font: 500 16px/1.625 var(--font-base); letter-spacing:0.0057em;  margin:0; }
+small { font: 500 13px/1.385 var(--font-base); letter-spacing:0.0194em; color:var(--color-fg-alt); }
+code  { font: 500 14px/1.5 var(--font-mono); }
+
+a { color: var(--color-fg-brand); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+::selection { background: var(--color-blue-90); color: var(--color-blue-15); }
