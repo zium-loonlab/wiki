@@ -196,28 +196,7 @@
   }
 
   /* ─── Game Guide ─── */
-  .guide-toolbar {
-    display: flex; align-items: center; justify-content: flex-end; gap: 12px;
-    margin-top: 32px;
-  }
-  .edit-toggle {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 16px; border-radius: 8px;
-    border: 1px solid var(--line); background: #fff;
-    font-family: inherit; font-size: 13px; font-weight: 600; color: var(--ink-mute);
-    cursor: pointer; transition: all .15s;
-  }
-  .edit-toggle:hover { background: var(--bg-soft); color: var(--ink); }
-  .edit-toggle.active { background: var(--vg-grad); color: #fff; border-color: transparent; }
-  .add-step-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 16px; border-radius: 8px;
-    border: 1px dashed var(--line); background: transparent;
-    font-family: inherit; font-size: 13px; font-weight: 600; color: var(--ink-mute);
-    cursor: pointer; transition: all .15s;
-  }
-  .add-step-btn:hover { border-color: rgba(79,124,255,.4); color: var(--vg-blue); }
-  .guide-list { display: flex; flex-direction: column; gap: 20px; margin-top: 16px; }
+  .guide-list { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
   .guide-step {
     border: 1px solid var(--line); border-radius: 20px;
     background: #fff;
@@ -228,18 +207,7 @@
   .guide-num { font-family: var(--font-display, inherit); font-size: 56px; font-weight: 800; letter-spacing: -0.04em; background: var(--vg-grad); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; margin-top: -4px; }
   .guide-body { display: flex; flex-direction: column; gap: 8px; }
   .guide-title { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.015em; line-height: 1.3; border: none; outline: none; background: transparent; font-family: inherit; width: 100%; }
-  .guide-title[contenteditable="true"]:focus,
-  .guide-desc[contenteditable="true"]:focus { outline: 1.5px solid rgba(79,124,255,.35); border-radius: 6px; padding: 2px 6px; }
-  .guide-desc { font-size: 16px; color: var(--ink-soft); line-height: 1.65; border: none; outline: none; background: transparent; font-family: inherit; width: 100%; }
-  .guide-step-del {
-    position: absolute; top: 14px; right: 16px;
-    width: 28px; height: 28px; border-radius: 6px;
-    border: 1px solid var(--line); background: #fff; cursor: pointer;
-    display: none; align-items: center; justify-content: center;
-    font-size: 14px; color: var(--ink-mute); transition: all .15s;
-  }
-  .edit-mode .guide-step-del { display: flex; }
-  .guide-step-del:hover { color: #DC2626; border-color: rgba(220,38,38,.3); }
+  .guide-desc { font-size: 16px; color: var(--ink-soft); line-height: 1.65; }
 
   /* ─── Multi Image Gallery (guide) ─── */
   .guide-imgs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
@@ -620,17 +588,6 @@
     <h2 class="sec-title">이렇게 <span class="accent">플레이하세요</span></h2>
     <p class="sec-sub">알로까를 처음 플레이하는 분들을 위한 기본 가이드입니다.</p>
 
-    <div class="guide-toolbar">
-      <button class="add-step-btn" id="addStepBtn">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        단계 추가
-      </button>
-      <button class="edit-toggle" id="editToggle">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 2l2 2-8 8H2v-2L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        내용 편집
-      </button>
-    </div>
-
     <div class="guide-list" id="guideList">
       <!-- Steps rendered by JS -->
     </div>
@@ -894,7 +851,7 @@ function initGuideImgs(container, title, stepNum) {
 // ── Game Guide ──
 const IMG_SVG = `<svg class="gi-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="3" y="7" width="26" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><circle cx="11" cy="14" r="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 22l7-7 5 5 4-4 9 9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
 
-const LS_GUIDE = 'alokka_guide_steps';
+
 const defaultSteps = [
   { title: '로그인 & 호선 설정', desc: '앱을 실행하면 로그인 화면이 나옵니다. 소셜 계정으로 로그인 후 탑승할 호선을 선택하세요. 호선은 서버와 같은 개념으로, 호선이 다르면 같은 위치에 있어도 서로 만날 수 없습니다.' },
   { title: '게임 허브 둘러보기', desc: '메인 허브에서 출발역·하차역 설정, 친구 초대, 출석 보상, 노선별 게임을 살펴볼 수 있습니다.' },
@@ -911,19 +868,6 @@ const defaultSteps = [
 ];
 
 let stepCount = 0;
-let isEditMode = false;
-
-function loadSavedSteps() {
-  try { return JSON.parse(localStorage.getItem(LS_GUIDE)) || defaultSteps; }
-  catch { return defaultSteps; }
-}
-function saveSteps() {
-  const steps = Array.from(document.querySelectorAll('.guide-step')).map(el => ({
-    title: el.querySelector('.guide-title').textContent,
-    desc: el.querySelector('.guide-desc').textContent,
-  }));
-  localStorage.setItem(LS_GUIDE, JSON.stringify(steps));
-}
 
 function makeStep(title, desc, idx) {
   stepCount++;
@@ -933,61 +877,18 @@ function makeStep(title, desc, idx) {
   step.innerHTML = `
     <div class="guide-num">${num}</div>
     <div class="guide-body">
-      <div class="guide-title" spellcheck="false">${title}</div>
-      <div class="guide-desc" spellcheck="false">${desc}</div>
-      <div class="guide-imgs">
-      </div>
-    </div>
-    <button class="guide-step-del" title="단계 삭제">✕</button>`;
-
-  step.querySelector('.guide-step-del').addEventListener('click', () => {
-    step.remove();
-    reindexSteps();
-    saveSteps();
-  });
-  step.querySelector('.guide-title').addEventListener('blur', saveSteps);
-  step.querySelector('.guide-desc').addEventListener('blur', saveSteps);
+      <div class="guide-title">${title}</div>
+      <div class="guide-desc">${desc}</div>
+      <div class="guide-imgs"></div>
+    </div>`;
   initGuideImgs(step.querySelector('.guide-imgs'), title, idx != null ? idx + 1 : null);
-
   return step;
-}
-
-function reindexSteps() {
-  stepCount = 0;
-  document.querySelectorAll('.guide-step').forEach(el => {
-    stepCount++;
-    el.querySelector('.guide-num').textContent = String(stepCount).padStart(2, '0');
-  });
 }
 
 function renderGuide() {
   const list = document.getElementById('guideList');
-  const steps = loadSavedSteps();
-  steps.forEach((s, i) => list.appendChild(makeStep(s.title, s.desc, i)));
+  defaultSteps.forEach((s, i) => list.appendChild(makeStep(s.title, s.desc, i)));
 }
-
-
-const editToggle = document.getElementById('editToggle');
-editToggle.addEventListener('click', () => {
-  isEditMode = !isEditMode;
-  document.getElementById('guideList').classList.toggle('edit-mode', isEditMode);
-  document.querySelectorAll('.guide-title, .guide-desc').forEach(el => {
-    el.contentEditable = isEditMode ? 'true' : 'false';
-  });
-  editToggle.classList.toggle('active', isEditMode);
-  editToggle.innerHTML = isEditMode
-    ? `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12l10-10M2 2h4M12 8v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 편집 완료`
-    : `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 2l2 2-8 8H2v-2L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 내용 편집`;
-  if (!isEditMode) saveSteps();
-});
-
-document.getElementById('addStepBtn').addEventListener('click', () => {
-  const step = makeStep('새 단계', '설명을 입력하세요.');
-  step.querySelectorAll('.guide-title, .guide-desc').forEach(el => { el.contentEditable = isEditMode ? 'true' : 'false'; });
-  document.getElementById('guideList').appendChild(step);
-  if (!isEditMode) { editToggle.click(); }
-  step.querySelector('.guide-title').focus();
-});
 
 renderGuide();
 
