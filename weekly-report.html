@@ -197,14 +197,33 @@
   .mb40{margin-bottom:40px;}
   .mb48{margin-bottom:48px;}
 
+  /* ── Gantt ── */
+  .gantt-wrap{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:28px;}
+  .gantt-head{display:grid;grid-template-columns:128px 1fr;border-bottom:1px solid var(--line);}
+  .gantt-head-label{padding:9px 14px;font-size:10px;font-weight:700;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;border-right:1px solid var(--line);display:flex;align-items:center;}
+  .gantt-head-dates{display:flex;position:relative;}
+  .gantt-date{flex:1;text-align:center;font-size:10px;color:var(--ink-mute);padding:9px 0;border-left:1px solid var(--line-soft);font-weight:600;}
+  .gantt-date.today-col{color:var(--red);font-weight:800;}
+  .gantt-row-link{display:grid;grid-template-columns:128px 1fr;border-bottom:1px solid var(--line-soft);text-decoration:none;cursor:pointer;transition:background .15s;}
+  .gantt-row-link:last-child{border-bottom:none;}
+  .gantt-row-link:hover .gantt-row-name{color:var(--ink);}
+  .gantt-row-name{padding:0 14px;font-size:12px;font-weight:700;color:var(--ink-soft);display:flex;align-items:center;gap:8px;border-right:1px solid var(--line);}
+  .gantt-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+  .gantt-track{position:relative;height:44px;}
+  .gantt-col-bg{position:absolute;inset:0;display:flex;pointer-events:none;}
+  .gantt-col{flex:1;border-left:1px solid var(--line-soft);}
+  .gantt-bar{position:absolute;top:50%;transform:translateY(-50%);height:26px;border-radius:6px;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 6px rgba(0,0,0,.12);}
+  .gantt-today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--red);z-index:5;opacity:.7;}
+  .gantt-today-line::before{content:'오늘';position:absolute;top:6px;left:4px;font-size:9px;font-weight:800;color:var(--red);white-space:nowrap;}
+
   /* ── Responsive ── */
   @media(max-width:900px){
     .sum-grid{grid-template-columns:repeat(2,1fr);}
     .tl-wrap::before,.tl-wrap::after{display:none;}
-    .tl-card{display:none;}
     .risk-grid{grid-template-columns:1fr;}
     .chk-grid{grid-template-columns:1fr;}
     .cbt-grid{grid-template-columns:1fr;}
+    .gantt-head-label,.gantt-row-name{padding-left:10px;padding-right:10px;font-size:11px;}
   }
   @media(max-width:640px){
     .sum-grid{grid-template-columns:1fr;}
@@ -313,8 +332,61 @@
     </div>
 
     <div class="sec-eyebrow mb40">03 · 주차별 WBS</div>
+
+    <!-- 간트 타임라인 -->
+    <div class="gantt-wrap">
+      <div class="gantt-head">
+        <div class="gantt-head-label">단계</div>
+        <div class="gantt-head-dates">
+          <div class="gantt-date">6/13</div>
+          <div class="gantt-date">6/20</div>
+          <div class="gantt-date today-col">6/25</div>
+          <div class="gantt-date">7/4</div>
+          <div class="gantt-date">7/11</div>
+          <div class="gantt-date">7/18</div>
+          <div class="gantt-date">7/25</div>
+        </div>
+      </div>
+
+      <a href="#wbs-prep" class="gantt-row-link">
+        <div class="gantt-row-name"><span class="gantt-dot" style="background:#7A8094"></span>사전 준비 완료</div>
+        <div class="gantt-track">
+          <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
+          <div class="gantt-today-line" style="left:24.5%"></div>
+          <div class="gantt-bar" style="left:0%;width:27%;background:#7A8094">~ 06.26 사전 준비</div>
+        </div>
+      </a>
+
+      <a href="#wbs-cbt" class="gantt-row-link">
+        <div class="gantt-row-name"><span class="gantt-dot" style="background:#16A34A"></span>사내 CBT</div>
+        <div class="gantt-track">
+          <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
+          <div class="gantt-today-line" style="left:24.5%"></div>
+          <div class="gantt-bar" style="left:29%;width:14.5%;background:#16A34A">~ 07.03 CBT</div>
+        </div>
+      </a>
+
+      <a href="#wbs-post" class="gantt-row-link">
+        <div class="gantt-row-name"><span class="gantt-dot" style="background:#4F7CFF"></span>CBT 후속 + 심사</div>
+        <div class="gantt-track">
+          <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
+          <div class="gantt-today-line" style="left:24.5%"></div>
+          <div class="gantt-bar" style="left:43.5%;width:29%;background:#4F7CFF">~ 07.17 후속작업</div>
+        </div>
+      </a>
+
+      <a href="#wbs-launch" class="gantt-row-link">
+        <div class="gantt-row-name"><span class="gantt-dot" style="background:#B45309"></span>오픈베타 출시</div>
+        <div class="gantt-track">
+          <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
+          <div class="gantt-today-line" style="left:24.5%"></div>
+          <div class="gantt-bar" style="left:72.5%;width:27.5%;background:#B45309">07.31 출시</div>
+        </div>
+      </a>
+    </div>
+
     <div class="wbs-container">
-      <div class="wbs-group g-0626">~ 2026.06.26 · 사전 준비 완료</div>
+      <div class="wbs-group g-0626" id="wbs-prep">~ 2026.06.26 · 사전 준비 완료</div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-tech">기술</span></div><div class="wbs-content"><div class="wbs-task">AWS 연동 / 불필요 기능 정리 / 보안 확인</div></div><div class="wbs-who">이샘미 선임</div><div class="wbs-st"><span class="st s-done">✓ 완료</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-tech">기술</span></div><div class="wbs-content"><div class="wbs-task">포인트 관리 시스템 / 스킬 아이템 / 친구초대</div></div><div class="wbs-who">이샘미 선임</div><div class="wbs-st"><span class="st s-done">✓ 완료</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-tech">기술</span></div><div class="wbs-content"><div class="wbs-task">인앱결제 연결 / TestFlight 심사 제출·통과</div></div><div class="wbs-who">이샘미 선임</div><div class="wbs-st"><span class="st s-done">✓ 완료</span></div></div>
@@ -330,11 +402,11 @@
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-tech">기술</span></div><div class="wbs-content"><div class="wbs-task">구글 애드몹 광고 적용</div><div class="wbs-note">광고 정책 및 테스트 필요</div></div><div class="wbs-who">강광훈 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-tech">기술</span></div><div class="wbs-content"><div class="wbs-task">유료플랜 정리 내용 적용</div><div class="wbs-note">인앱결제 정책과 연결 필요</div></div><div class="wbs-who">강광훈 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
 
-      <div class="wbs-group g-0703">~ 2026.07.03 · 사내 CBT</div>
+      <div class="wbs-group g-0703" id="wbs-cbt">~ 2026.07.03 · 사내 CBT</div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-cbt">CBT</span></div><div class="wbs-content"><div class="wbs-task">사내 CBT 진행</div><div class="wbs-note">다음 주부터 1주일간 · 랜덤매치 안정성 포함</div></div><div class="wbs-who">사내 조직원</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-cbt">CBT</span></div><div class="wbs-content"><div class="wbs-task">CBT 피드백 취합 및 우선순위 정리</div><div class="wbs-note">크리티컬·개선의견·추가 아이디어</div></div><div class="wbs-who">이샘미 선임 / 강광훈 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
 
-      <div class="wbs-group g-0717">~ 2026.07.17 · CBT 후속작업 + 심사</div>
+      <div class="wbs-group g-0717" id="wbs-post">~ 2026.07.17 · CBT 후속작업 + 심사</div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-post">후속작업</span></div><div class="wbs-content"><div class="wbs-task">크리티컬 이슈 수정</div><div class="wbs-note">결제·보상·계정·서버 등 핵심 이슈 우선</div></div><div class="wbs-who">이샘미 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-post">후속작업</span></div><div class="wbs-content"><div class="wbs-task">사용성 및 게임성 개선</div><div class="wbs-note">CBT 피드백 기반 우선순위 반영</div></div><div class="wbs-who">이샘미 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-post">후속작업</span></div><div class="wbs-content"><div class="wbs-task">추가 아이디어 반영 여부 검토</div><div class="wbs-note">오픈베타 전/후 반영 항목 분리</div></div><div class="wbs-who">이샘미 선임 / 강광훈 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
@@ -343,7 +415,7 @@
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-mkt">마케팅</span></div><div class="wbs-content"><div class="wbs-task">마케팅 콘텐츠 제작 및 SNS 홍보 시작</div><div class="wbs-note">CBT 후속작업·심사 기간 병행</div></div><div class="wbs-who">이샘미 선임 / 강광훈 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
       <div class="wbs-row"><div class="wbs-cat"><span class="tag tag-doc">서류</span></div><div class="wbs-content"><div class="wbs-task">게임 앱 등급 심사 신청</div><div class="wbs-note" style="color:var(--red)">반려 시 출시 일정 지연 가능</div></div><div class="wbs-who">이샘미 선임</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
 
-      <div class="wbs-group g-0731">07.31 · 오픈베타 출시</div>
+      <div class="wbs-group g-0731" id="wbs-launch">07.31 · 오픈베타 출시</div>
       <div class="wbs-row launch"><div class="wbs-cat"><span class="tag tag-launch">출시</span></div><div class="wbs-content"><div class="wbs-task">오픈베타 출시</div><div class="wbs-note">게임 앱 등급 심사 완료 및 CBT 후속작업 반영 후</div></div><div class="wbs-who">전체</div><div class="wbs-st"><span class="st s-plan">— 예정</span></div></div>
     </div>
   </div>
@@ -433,12 +505,6 @@
             <td><span class="vg-badge">탐지 결과 표현 수위</span></td>
             <td>공청회 및 리포트에서 어떤 표현을 피해야 하는지 확인</td>
             <td><ul class="detail-list"><li>"침해 판정" 표현 가능 여부</li><li>"침해 가능성 탐지" 표현 가능 여부</li><li>"법적 증거" 표현 위험성 / 리포트 내 면책 문구</li><li>오탐·미탐 고지 방식</li></ul></td>
-          </tr>
-          <tr class="star-row">
-            <td class="star-cell">★</td>
-            <td><span class="vg-badge">협회·지음·성우 역할 구분</span></td>
-            <td>협회, 지음, 권리자의 역할과 책임을 어떻게 나누는 것이 적절한지 확인</td>
-            <td><ul class="detail-list"><li>협회: 회원·권리자 동의 관리</li><li>지음: 기술 제공·플랫폼 운영</li><li>성우: 권리자 동의 주체</li><li>탐지 결과 책임 범위 / 오탐·미탐 발생 시 책임 구조</li></ul></td>
           </tr>
           <tr>
             <td class="star-cell">—</td>
