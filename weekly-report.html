@@ -204,6 +204,7 @@
   .gantt-head-dates{display:flex;position:relative;}
   .gantt-date{flex:1;text-align:center;font-size:10px;color:var(--ink-mute);padding:9px 0;border-left:1px solid var(--line-soft);font-weight:600;}
   .gantt-date.today-col{color:var(--red);font-weight:800;}
+  .gantt-date-end{flex:0 0 auto;position:absolute;right:0;top:0;height:100%;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:600;color:var(--ink-mute);border-left:1px solid var(--line-soft);background:#fff;}
   .gantt-row-link{display:grid;grid-template-columns:128px 1fr;border-bottom:1px solid var(--line-soft);text-decoration:none;cursor:pointer;transition:background .15s;}
   .gantt-row-link:last-child{border-bottom:none;}
   .gantt-row-link:hover .gantt-row-name{color:var(--ink);}
@@ -334,17 +335,19 @@
     <div class="sec-eyebrow mb40">03 · 주차별 WBS</div>
 
     <!-- 간트 타임라인 -->
+    <!-- 총 49일 (6/12~7/31), 7칸, 각 칸=7일=14.28% / 오늘 6/25 = 13/49 = 26.5% -->
     <div class="gantt-wrap">
       <div class="gantt-head">
         <div class="gantt-head-label">단계</div>
         <div class="gantt-head-dates">
-          <div class="gantt-date">6/13</div>
-          <div class="gantt-date">6/20</div>
-          <div class="gantt-date today-col">6/25</div>
-          <div class="gantt-date">7/4</div>
-          <div class="gantt-date">7/11</div>
-          <div class="gantt-date">7/18</div>
-          <div class="gantt-date">7/25</div>
+          <div class="gantt-date">6/12</div>
+          <div class="gantt-date">6/19</div>
+          <div class="gantt-date">6/26</div>
+          <div class="gantt-date">7/3</div>
+          <div class="gantt-date">7/10</div>
+          <div class="gantt-date">7/17</div>
+          <div class="gantt-date">7/24</div>
+          <div class="gantt-date gantt-date-end">7/31</div>
         </div>
       </div>
 
@@ -352,8 +355,8 @@
         <div class="gantt-row-name"><span class="gantt-dot" style="background:#7A8094"></span>사전 준비 완료</div>
         <div class="gantt-track">
           <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
-          <div class="gantt-today-line" style="left:24.5%"></div>
-          <div class="gantt-bar" style="left:0%;width:27%;background:#7A8094">~ 06.26 사전 준비</div>
+          <div class="gantt-today-line" style="left:28.6%"></div>
+          <div class="gantt-bar" style="left:0%;width:28.6%;background:#7A8094">~ 06.26 사전 준비</div>
         </div>
       </a>
 
@@ -361,8 +364,8 @@
         <div class="gantt-row-name"><span class="gantt-dot" style="background:#16A34A"></span>사내 CBT</div>
         <div class="gantt-track">
           <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
-          <div class="gantt-today-line" style="left:24.5%"></div>
-          <div class="gantt-bar" style="left:29%;width:14.5%;background:#16A34A">~ 07.03 CBT</div>
+          <div class="gantt-today-line" style="left:28.6%"></div>
+          <div class="gantt-bar" style="left:28.6%;width:14.3%;background:#16A34A">~ 07.03 CBT</div>
         </div>
       </a>
 
@@ -370,8 +373,8 @@
         <div class="gantt-row-name"><span class="gantt-dot" style="background:#4F7CFF"></span>CBT 후속 + 심사</div>
         <div class="gantt-track">
           <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
-          <div class="gantt-today-line" style="left:24.5%"></div>
-          <div class="gantt-bar" style="left:43.5%;width:29%;background:#4F7CFF">~ 07.17 후속작업</div>
+          <div class="gantt-today-line" style="left:28.6%"></div>
+          <div class="gantt-bar" style="left:42.9%;width:28.6%;background:#4F7CFF">~ 07.17 후속작업</div>
         </div>
       </a>
 
@@ -379,8 +382,8 @@
         <div class="gantt-row-name"><span class="gantt-dot" style="background:#B45309"></span>오픈베타 출시</div>
         <div class="gantt-track">
           <div class="gantt-col-bg"><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div><div class="gantt-col"></div></div>
-          <div class="gantt-today-line" style="left:24.5%"></div>
-          <div class="gantt-bar" style="left:72.5%;width:27.5%;background:#B45309">07.31 출시</div>
+          <div class="gantt-today-line" style="left:28.6%"></div>
+          <div class="gantt-bar" style="left:71.4%;width:28.6%;background:#B45309">07.31 출시</div>
         </div>
       </a>
     </div>
